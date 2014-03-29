@@ -7,8 +7,9 @@ Unobtrusively handles security based on roles (authorization) plus authenticatio
 
 ## Usage
 
-```javascript
+Configuring the firewall.
 
+```javascript
 var firewall = require('node-firewall');
     
 var fw = new firewall.Firewall('fw.main', '^/', function (req, res, next) {
@@ -33,4 +34,11 @@ firewall.map.add(fw);
 
 // enable debug (it's quite verbose, should be disabled in production)
 firewall.map.debug(true);
+```
+
+Enabling the middleware
+
+```javascript
+// init firewall middleware
+firewall.use(app);
 ```
