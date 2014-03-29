@@ -60,4 +60,25 @@ describe('FirewallMap', function () {
         map.check(requestHelper('/test1'), grantedCb, deniedCb);
         expect(granted).to.equal(false); // match fw1
     });
+
+
+    it('should configure firewalls with a config object', function () {
+        map = new FirewallMap();
+        map.fromConfig({
+            'fw.main': {
+                debug: true,
+                path:  '^/',
+                rules: [
+                    [ '^/login', null ],
+                    [ '^/', [ 'user', 'admin' ] ],
+                    [ '^/admin', [ 'admin' ] ]
+                ]
+            }
+        });
+
+        expect(map.firewalls.length).to.equal(1);
+        expect(map.firewalls[0].name).to.equal('fw.main');
+        expect(map.firewalls[0].path).to.equal('^/');
+        expect(map.firewalls[0].rules.length).to.equal(3);
+    });
 });

@@ -70,4 +70,16 @@ describe('Firewall', function () {
         fw.add('^/testing', 'user');
         expect(fw.check(requestHelper('/test', true))).to.equal(true);
     });
+
+
+    it('should provide useful informations for debugging', function () {
+        fw = new Firewall('fw', '^/');
+        fw.add('^/admin', 'admin');
+        fw.add('^/', null);
+        fw.debug(true);
+
+        expect(fw.match(requestHelper('/', false))).to.equal(true);
+        expect(fw.check(requestHelper('/', false))).to.equal(true);
+        expect(fw.check(requestHelper('/admin', true, [ 'user' ]))).to.equal(false);
+    });
 });
