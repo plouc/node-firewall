@@ -59,6 +59,12 @@ describe('Firewall', function () {
     });
 
 
+    it('should do nothing if no rule were defined for a given request', function () {
+        fw = new Firewall('fw', '^/unreached');
+
+        expect(fw.check(requestHelper('/test', true))).to.equal(null);
+    })
+
     it('should apply rules in order they were defined', function () {
         fw = new Firewall('fw', '^/');
         fw.add('^/test', 'user');
@@ -74,8 +80,8 @@ describe('Firewall', function () {
 
     it('should provide useful informations for debugging', function () {
         fw = new Firewall('fw', '^/');
-        fw.add('^/admin', 'admin');
         fw.add('^/', null);
+        fw.prepend('^/admin', 'admin');
         fw.debug(true);
 
         expect(fw.match(requestHelper('/', false))).to.equal(true);
