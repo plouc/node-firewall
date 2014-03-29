@@ -1,0 +1,24 @@
+README.md
+build/
+docs/
+examples/
+reports/
+test/
+
+# Node.js
+.npmignore
+node_modules/
+npm-debug.log
+
+# Mac OS X
+.DS_Store
+
+# IDE
+.idea
+
+# Git
+.git*
+
+# Utilities
+.jshintrc
+.travis.yml

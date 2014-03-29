@@ -1,8 +1,14 @@
 {
   "name": "node-firewall",
-  "version": "0.0.0",
+  "version": "0.0.01",
   "description": "Unobtrusively handles security based on roles (authorization) plus authentication initialization",
-  "main": "index.js",
+  "keywords": [
+      "express",
+      "connect",
+      "authorization",
+      "security"
+  ],
+  "main": "./lib",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,9 +17,19 @@
     "url": "https://github.com/plouc/node-firewall.git"
   },
   "author": "Raphaël Benitte <benitteraphael+npm@gmail.com> (http://www.rbenitte.com/)",
-  "license": "ISC",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/plouc/node-firewall/issues"
   },
-  "homepage": "https://github.com/plouc/node-firewall"
+  "homepage": "https://github.com/plouc/node-firewall",
+  "devDependencies": {
+      "mocha": "1.x.x",
+      "chai": "1.x.x",
+      "chai-connect-middleware": "0.3.x"
+  }
 }
