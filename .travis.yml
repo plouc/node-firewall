@@ -9,5 +9,5 @@ before_install:
   - "npm install istanbul -g"
   - "npm install coveralls -g"
 
-after_success:
-  - "cat reports/coverage/lcov.info | coveralls"
+#after_success:
+#  - "cat reports/coverage/lcov.info | coveralls"
