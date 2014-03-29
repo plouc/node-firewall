@@ -82,6 +82,8 @@ describe('Firewall', function () {
 
         expect(fw.match(requestHelper('/', false))).to.equal(true);
         expect(fw.check(requestHelper('/', false))).to.equal(true);
+        expect(fw.check(requestHelper('/admin', true))).to.equal(false);
         expect(fw.check(requestHelper('/admin', true, [ 'user' ]))).to.equal(false);
+        expect(fw.check(requestHelper('/admin', true, [ 'admin' ]))).to.equal(true);
     });
 });
