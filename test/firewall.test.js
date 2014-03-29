@@ -65,6 +65,7 @@ describe('Firewall', function () {
         expect(fw.check(requestHelper('/test', true))).to.equal(null);
     })
 
+
     it('should apply rules in order they were defined', function () {
         fw = new Firewall('fw', '^/');
         fw.add('^/test', 'user').add('^/testing', null);
@@ -80,10 +81,48 @@ describe('Firewall', function () {
         fw = new Firewall('fw', '^/');
         fw.add('^/', null).prepend('^/admin', 'admin').debug(true);
 
+        var logs = [];
+        fw.logger = function () {
+            logs.push([].slice.call(arguments)[0]);
+        }
+
         expect(fw.match(requestHelper('/', false))).to.equal(true);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" match request url: /'
+        ]);
+        logs = [];
+
         expect(fw.check(requestHelper('/', false))).to.equal(true);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" rule match: ^/ [GET /]',
+            '[firewall] "fw" granted access'
+        ]);
+        logs = [];
+
         expect(fw.check(requestHelper('/admin', true))).to.equal(false);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" rule match: ^/admin [GET /admin]',
+            '[firewall] "fw" denied access'
+        ]);
+        logs = [];
+
         expect(fw.check(requestHelper('/admin', true, [ 'user' ]))).to.equal(false);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" rule match: ^/admin [GET /admin]',
+            '[firewall] "fw" user roles: "user"',
+            '[firewall] "fw" allowed roles: "admin"',
+            '[firewall] "fw" denied access'
+        ]);
+        logs = [];
+
         expect(fw.check(requestHelper('/admin', true, [ 'admin' ]))).to.equal(true);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" rule match: ^/admin [GET /admin]',
+            '[firewall] "fw" user roles: "admin"',
+            '[firewall] "fw" allowed roles: "admin"',
+            '[firewall] "fw" matching roles: "admin"',
+            '[firewall] "fw" granted access'
+        ]);
+        logs = [];
     });
 });

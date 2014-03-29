@@ -44,6 +44,11 @@ Enabling the middleware
 firewall.use(app);
 ```
 
+## Changelog
+
+* 0.1.2
+  - Improve firewall log system
+
 ## Credits
 
 [Raphaël Benitte](http://github.com/plouc)
