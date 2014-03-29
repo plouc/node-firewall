@@ -10,7 +10,7 @@
   ],
   "main": "./lib",
   "scripts": {
-    "test": "istanbul cover --dir reports --report html node_modules/.bin/mocha -- --reporter spec --no-colors test/*.test.js"
+    "test": "istanbul cover --dir reports/coverage --report lcovonly node_modules/.bin/_mocha -- --reporter spec --no-colors test/*.test.js"
   },
   "repository": {
     "type": "git",
