@@ -67,22 +67,18 @@ describe('Firewall', function () {
 
     it('should apply rules in order they were defined', function () {
         fw = new Firewall('fw', '^/');
-        fw.add('^/test', 'user');
-        fw.add('^/testing', null);
+        fw.add('^/test', 'user').add('^/testing', null);
         expect(fw.check(requestHelper('/test', true))).to.equal(false);
 
         fw = new Firewall('fw', '^/');
-        fw.add('^/test', null);
-        fw.add('^/testing', 'user');
+        fw.add('^/test', null).add('^/testing', 'user');
         expect(fw.check(requestHelper('/test', true))).to.equal(true);
     });
 
 
     it('should provide useful informations for debugging', function () {
         fw = new Firewall('fw', '^/');
-        fw.add('^/', null);
-        fw.prepend('^/admin', 'admin');
-        fw.debug(true);
+        fw.add('^/', null).prepend('^/admin', 'admin').debug(true);
 
         expect(fw.match(requestHelper('/', false))).to.equal(true);
         expect(fw.check(requestHelper('/', false))).to.equal(true);
