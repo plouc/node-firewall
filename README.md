@@ -46,7 +46,7 @@ firewall.use(app);
 
 ## Credits
 
-  - [Raphaël Benitte](http://github.com/plouc)
+[Raphaël Benitte](http://github.com/plouc)
 
 ## License
 
