@@ -22,11 +22,11 @@ var fw = new firewall.Firewall('fw.main', '^/', function (req, res, next) {
 // allow non authenticated users to access the login page
 fw.add('^/login', null);
 
+// secure admin area
+fw.add('^/admin', 'admin');
+
 // all other urls require user role
 fw.add('^/', 'user');
-
-// secure admin area
-fw.add('^/', 'admin');
 
 // add our new firewall to the map
 firewall.map.add(fw);
