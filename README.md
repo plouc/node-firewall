@@ -43,3 +43,13 @@ Enabling the middleware
 // init firewall middleware
 firewall.use(app);
 ```
+
+## Credits
+
+  - [Raphaël Benitte](http://github.com/plouc)
+
+## License
+
+[The MIT License](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2014 Raphaël Benitte <[http://rbenitte.com/](http://rbenitte.com/)>
