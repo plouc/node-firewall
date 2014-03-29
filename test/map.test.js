@@ -38,6 +38,13 @@ describe('FirewallMap', function () {
     });
 
 
+    it('should throw an error when trying to get a non-existent firewall', function () {
+        expect(function () {
+            map.get('invalid');
+        }).to.throw('Unable to find a firewall by name "invalid"');
+    });
+
+
     it('should only apply on request having its url matching firewall path', function () {
         var granted = null;
         var grantedCb = function () { granted = true; }
@@ -63,8 +70,7 @@ describe('FirewallMap', function () {
 
 
     it('should configure firewalls with a config object', function () {
-        map = new FirewallMap();
-        map.fromConfig({
+        map.clear().fromConfig({
             'fw.main': {
                 debug: true,
                 path:  '^/',
@@ -80,5 +86,18 @@ describe('FirewallMap', function () {
         expect(map.firewalls[0].name).to.equal('fw.main');
         expect(map.firewalls[0].path).to.equal('^/');
         expect(map.firewalls[0].rules.length).to.equal(3);
+    });
+
+
+    it('should provide a method to configure debug on all its firewalls', function () {
+        map.debug(false);
+        map.firewalls.forEach(function (firewall) {
+            expect(firewall.debugMode).to.equal(false);
+        });
+
+        map.debug(true);
+        map.firewalls.forEach(function (firewall) {
+            expect(firewall.debugMode).to.equal(true);
+        });
     });
 });
