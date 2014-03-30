@@ -3,10 +3,19 @@
 [![Build](https://travis-ci.org/plouc/node-firewall.png)](https://travis-ci.org/plouc/node-firewall)
 [![Coverage](https://coveralls.io/repos/plouc/node-firewall/badge.png?branch=master)](https://coveralls.io/r/plouc/node-firewall?branch=master)
 [![Dependency Status](https://david-dm.org/plouc/node-firewall.png)](https://david-dm.org/plouc/node-firewall)
+[![NPM version](https://badge.fury.io/js/node-firewall.png)](http://badge.fury.io/js/node-firewall)
 
 Unobtrusively handles security based on roles (authorization) plus authentication initialization.
 
 [Documentation](http://node-firewall.readthedocs.org/en/latest/) is available on read the docs.
+
+## Installation
+
+### Node
+
+```
+npm install node-firewall
+```
 
 ## Usage
 
