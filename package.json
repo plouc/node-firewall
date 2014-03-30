@@ -1,6 +1,6 @@
 {
   "name": "node-firewall",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Unobtrusively handles security based on roles (authorization) plus authentication initialization",
   "keywords": [
       "express",

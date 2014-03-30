@@ -54,6 +54,8 @@ firewall.use(app);
 * 0.1.5
   - Add authentication handler
   - Add default handlers to firewall
+* 0.1.6
+  - Fix problem with middleware
 
 ## Credits
 
