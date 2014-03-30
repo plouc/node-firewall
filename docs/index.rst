@@ -6,12 +6,21 @@
 Welcome to node-firewall's documentation!
 =========================================
 
+The firewall module helps to handle **authorization** based on **roles** and init **authentication process**.
+
+It exposes three main components:
+
+* A **FirewallMap**
+* A **Firewall**
+* A **middleware** to easily plug it to express
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-
+   firewall
+   firewall-map
 
 Indices and tables
 ==================
