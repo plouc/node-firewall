@@ -6,6 +6,8 @@
 
 Unobtrusively handles security based on roles (authorization) plus authentication initialization.
 
+[Documentation](http://node-firewall.readthedocs.org/en/latest/) is available on read the docs.
+
 ## Usage
 
 Configuring the firewall.
