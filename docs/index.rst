@@ -14,6 +14,9 @@ It exposes three main components:
 * A **Firewall**
 * A **middleware** to easily plug it to express
 
+This module was build to work in conjunction with `passport <https://github.com/jaredhanson/passport/>`_ which
+is in charge of user **authentication**.
+
 Contents:
 
 .. toctree::

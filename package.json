@@ -6,7 +6,8 @@
       "express",
       "connect",
       "authorization",
-      "security"
+      "security",
+      "roles"
   ],
   "main": "./lib",
   "scripts": {
