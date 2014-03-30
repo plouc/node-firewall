@@ -6,6 +6,11 @@
 Welcome to node-firewall's documentation!
 =========================================
 
+.. image:: https://travis-ci.org/plouc/node-firewall.png
+.. image:: https://coveralls.io/repos/plouc/node-firewall/badge.png?branch=master
+.. image:: https://david-dm.org/plouc/node-firewall.png
+.. image:: https://badge.fury.io/js/node-firewall.png
+
 The firewall module helps to handle **authorization** based on **roles** and init **authentication process**.
 
 It exposes three main components:
