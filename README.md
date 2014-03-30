@@ -48,6 +48,9 @@ firewall.use(app);
 
 * 0.1.2
   - Improve firewall log system
+* 0.1.3
+  - Fix FirewallMap.get when trying to retrieve a non existent firewall
+  - Improve doc blocks
 
 ## Credits
 
