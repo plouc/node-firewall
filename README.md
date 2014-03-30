@@ -56,6 +56,7 @@ firewall.use(app);
 * 0.1.4
   - Improve documentation
   - Add ability to filter firewall rules based on request http method
+  - Add Firewall.dump() method
 
 ## Credits
 

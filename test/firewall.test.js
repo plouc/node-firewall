@@ -29,7 +29,7 @@ describe('Firewall', function () {
         fw.add(/$\/test$/, ['user', 'admin']);
         expect(fw.rules.length).to.equal(1);
         expect(fw.rules[0].roles).to.deep.equal(['user', 'admin']);
-        expect(fw.rules[0].method).to.be.a('null');
+        expect(fw.rules[0].method).to.equal('*');
 
         fw.add(/$\/test\/method$/, ['user', 'admin'], 'get');
         expect(fw.rules.length).to.equal(2);
@@ -134,5 +134,23 @@ describe('Firewall', function () {
             '[firewall] "fw" granted access'
         ]);
         logs = [];
+    });
+
+
+    it('should prettily dump all defined rules', function () {
+        fw = new Firewall('fw', '^/');
+        expect(fw.dump()).to.equal('no rule defined on "fw"');
+
+        fw.add('^/login',   null);
+        fw.add('^/account', 'user');
+        fw.add('^/admin',   'admin');
+        fw.add('^/admin',   ['super_admin', 'hyper_admin'], 'POST');
+        expect(fw.dump()).to.equal(
+            "| PATH      | ROLES                    | METHOD |\n" +
+            "| ^/login   | null                     | *      |\n" +
+            "| ^/account | user                     | *      |\n" +
+            "| ^/admin   | admin                    | *      |\n" +
+            "| ^/admin   | super_admin, hyper_admin | POST   |"
+        );
     });
 });
