@@ -24,11 +24,6 @@ Contents:
 
    firewall
    firewall-map
+   middleware
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
