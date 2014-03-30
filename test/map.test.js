@@ -1,7 +1,7 @@
-var FirewallMap   = require('../lib/map'),
-    Firewall      = require('../lib/firewall'),
-    requestHelper = require('./requestHelper'),
-    expect        = require('chai').expect;
+var FirewallMap = require('../lib/map'),
+    Firewall    = require('../lib/firewall'),
+    testHelper  = require('./testHelper'),
+    expect      = require('chai').expect;
 
 describe('FirewallMap', function () {
     var map = new FirewallMap();
@@ -47,24 +47,28 @@ describe('FirewallMap', function () {
 
     it('should only apply on request having its url matching firewall path', function () {
         var granted = null;
-        var grantedCb = function () { granted = true; }
-        var deniedCb  = function () { granted = false; }
+        var authCb    = function () { granted = 'auth'; }
+        var grantedCb = function () { granted = true;   }
+        var deniedCb  = function () { granted = false;  }
 
-        var fw0 = new Firewall('fw.0', '^/test0');
+        var fw0 = new Firewall('fw.0', '^/test0', authCb, grantedCb, deniedCb);
         fw0.add('^/', null);
 
-        var fw1 = new Firewall('fw.0', '^/test1');
+        var fw1 = new Firewall('fw.0', '^/test1', authCb, grantedCb, deniedCb);
         fw1.add('^/', 'user');
 
         map.clear().add(fw0).add(fw1);
 
-        map.check(requestHelper('/'), grantedCb, deniedCb);
+        map.check(testHelper.req('/'));
         expect(granted).to.equal(null); // no match
 
-        map.check(requestHelper('/test0'), grantedCb, deniedCb);
+        map.check(testHelper.req('/test0'));
         expect(granted).to.equal(true); // match fw0
 
-        map.check(requestHelper('/test1'), grantedCb, deniedCb);
+        map.check(testHelper.req('/test1'));
+        expect(granted).to.equal('auth'); // match fw1
+
+        map.check(testHelper.req('/test1', true, ['user.partial']));
         expect(granted).to.equal(false); // match fw1
     });
 

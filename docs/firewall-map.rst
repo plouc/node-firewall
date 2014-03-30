@@ -26,11 +26,7 @@ You can configure a map by using the API.
 
    // ...
 
-   map.check(req, function (fw) {
-       // access granted
-   }, function (fw) {
-       // access denied
-   });
+   map.check(req, res, next);
 
 You can also configure the FirewallMap using a plain old javascript object.
 

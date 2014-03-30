@@ -21,18 +21,6 @@ Usage
        }
    });
 
-   // success handler
-   firewall.map.get('fw.main').successHandler = function (req, res, next) {
-        next(); // access granted
-   };
-
-   // failure handler
-   firewall.map.get('fw.main').failureHandler = function (req, res, next) {
-        // access denied
-        res.status(401);
-        return res.send({ status : 401 });
-    });
-
    // plug it to the application
    firewall.use(app);
 

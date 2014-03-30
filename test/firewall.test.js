@@ -1,6 +1,6 @@
-var Firewall      = require('../lib/firewall'),
-    requestHelper = require('./requestHelper'),
-    expect        = require('chai').expect;
+var Firewall   = require('../lib/firewall'),
+    testHelper = require('./testHelper'),
+    expect     = require('chai').expect;
 
 describe('Firewall', function () {
     var fw;
@@ -55,35 +55,40 @@ describe('Firewall', function () {
         fw.add('^/', 'user', 'POST');
         fw.add('^/', null,   'GET');
 
-        expect(fw.check(requestHelper('/', false, [], 'GET'))).to.equal(true);
-        expect(fw.check(requestHelper('/', false, [], 'POST'))).to.equal(false);
+        expect(fw.check(testHelper.req('/', false, [], 'GET'), testHelper.res, testHelper.next())).to.equal(true);
+        expect(fw.check(testHelper.req('/', false, [], 'POST'), testHelper.res, testHelper.next())).to.equal(false);
     });
 
 
     it('should only apply on request having an url matching its path', function () {
         fw = new Firewall('fw', '^/');
-        expect(fw.match(requestHelper('/'))).to.equal(true);
+        expect(fw.match(testHelper.req('/'))).to.equal(true);
 
         fw = new Firewall('fw', '^/admin');
-        expect(fw.match(requestHelper('/'))).to.equal(false);
+        expect(fw.match(testHelper.req('/'))).to.equal(false);
     });
 
 
     it('should do nothing if no rule were defined for a given request', function () {
         fw = new Firewall('fw', '^/unreached');
 
-        expect(fw.check(requestHelper('/test', true))).to.equal(null);
+        var called = false;
+        expect(fw.check(testHelper.req('/test', true), {}, function () {
+            called = true;
+        })).to.equal(null);
+        expect(called).to.equal(true);
     })
 
 
     it('should apply rules in order they were defined', function () {
         fw = new Firewall('fw', '^/');
         fw.add('^/test', 'user').add('^/testing', null);
-        expect(fw.check(requestHelper('/test', true))).to.equal(false);
+        expect(fw.check(testHelper.req('/test', true), testHelper.res, testHelper.next()
+        )).to.equal(false);
 
         fw = new Firewall('fw', '^/');
         fw.add('^/test', null).add('^/testing', 'user');
-        expect(fw.check(requestHelper('/test', true))).to.equal(true);
+        expect(fw.check(testHelper.req('/test', true), testHelper.res, testHelper.next())).to.equal(true);
     });
 
 
@@ -96,42 +101,54 @@ describe('Firewall', function () {
             logs.push([].slice.call(arguments)[0]);
         }
 
-        expect(fw.match(requestHelper('/', false))).to.equal(true);
+        expect(fw.match(testHelper.req('/', false))).to.equal(true);
         expect(logs).to.deep.equal([
             '[firewall] "fw" match request url: /'
         ]);
         logs = [];
 
-        expect(fw.check(requestHelper('/', false))).to.equal(true);
+        expect(fw.check(testHelper.req('/', false), testHelper.res, testHelper.next())).to.equal(true);
         expect(logs).to.deep.equal([
             '[firewall] "fw" rule match: ^/ [GET /]',
-            '[firewall] "fw" granted access'
+            '[firewall] "fw" granted access',
+            '[firewall] "fw" calling success handler'
         ]);
         logs = [];
 
-        expect(fw.check(requestHelper('/admin', true))).to.equal(false);
+        expect(fw.check(testHelper.req('/admin', false), testHelper.res)).to.equal(false);
         expect(logs).to.deep.equal([
             '[firewall] "fw" rule match: ^/admin [GET /admin]',
-            '[firewall] "fw" denied access'
+            '[firewall] "fw" denied access (user is not authenticated)',
+            '[firewall] "fw" calling authentication handler'
         ]);
         logs = [];
 
-        expect(fw.check(requestHelper('/admin', true, [ 'user' ]))).to.equal(false);
+        expect(fw.check(testHelper.req('/admin', true), testHelper.res)).to.equal(false);
+        expect(logs).to.deep.equal([
+            '[firewall] "fw" rule match: ^/admin [GET /admin]',
+            '[firewall] "fw" denied access (user has no role)',
+            '[firewall] "fw" calling failure handler'
+        ]);
+        logs = [];
+
+        expect(fw.check(testHelper.req('/admin', true, [ 'user' ]), testHelper.res)).to.equal(false);
         expect(logs).to.deep.equal([
             '[firewall] "fw" rule match: ^/admin [GET /admin]',
             '[firewall] "fw" user roles: "user"',
             '[firewall] "fw" allowed roles: "admin"',
-            '[firewall] "fw" denied access'
+            '[firewall] "fw" denied access',
+            '[firewall] "fw" calling failure handler'
         ]);
         logs = [];
 
-        expect(fw.check(requestHelper('/admin', true, [ 'admin' ]))).to.equal(true);
+        expect(fw.check(testHelper.req('/admin', true, [ 'admin' ]), testHelper.res, testHelper.next())).to.equal(true);
         expect(logs).to.deep.equal([
             '[firewall] "fw" rule match: ^/admin [GET /admin]',
             '[firewall] "fw" user roles: "admin"',
             '[firewall] "fw" allowed roles: "admin"',
             '[firewall] "fw" matching roles: "admin"',
-            '[firewall] "fw" granted access'
+            '[firewall] "fw" granted access',
+            '[firewall] "fw" calling success handler'
         ]);
         logs = [];
     });
