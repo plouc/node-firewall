@@ -53,6 +53,9 @@ firewall.use(app);
 * 0.1.3
   - Fix FirewallMap.get when trying to retrieve a non existent firewall
   - Improve doc blocks
+* 0.1.4
+  - Improve documentation
+  - Add ability to filter firewall rules based on request http method
 
 ## Credits
 

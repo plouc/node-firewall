@@ -50,6 +50,16 @@ describe('Firewall', function () {
     });
 
 
+    it('should provide a way to conditionally apply rules depending on request http method', function () {
+        fw = new Firewall('fw', '^/');
+        fw.add('^/', 'user', 'POST');
+        fw.add('^/', null,   'GET');
+
+        expect(fw.check(requestHelper('/', false, [], 'GET'))).to.equal(true);
+        expect(fw.check(requestHelper('/', false, [], 'POST'))).to.equal(false);
+    });
+
+
     it('should only apply on request having an url matching its path', function () {
         fw = new Firewall('fw', '^/');
         expect(fw.match(requestHelper('/'))).to.equal(true);
