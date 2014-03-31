@@ -55,7 +55,7 @@ describe('FirewallMap', function () {
         fw0.add('^/', null);
 
         var fw1 = new Firewall('fw.0', '^/test1', authCb, grantedCb, deniedCb);
-        fw1.add('^/', 'user');
+        fw1.add('^/', ['role', 'user']);
 
         map.clear().add(fw0).add(fw1);
 
@@ -79,9 +79,9 @@ describe('FirewallMap', function () {
                 debug: true,
                 path:  '^/',
                 rules: [
-                    [ '^/login', null ],
-                    [ '^/', [ 'user', 'admin' ] ],
-                    [ '^/admin', [ 'admin' ] ]
+                    ['^/login', null],
+                    ['^/', ['role', ['user', 'admin']]],
+                    ['^/admin', ['role', 'admin']]
                 ]
             }
         });

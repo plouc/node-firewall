@@ -16,7 +16,7 @@ Usage
            path:  '^/',
            rules: [
                [ '^/login', null   ],
-               [ '^/',      'user' ]
+               [ '^/',      ['role', 'user'] ]
            ]
        }
    });

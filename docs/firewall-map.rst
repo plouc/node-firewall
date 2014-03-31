@@ -40,7 +40,7 @@ You can also configure the FirewallMap using a plain old javascript object.
            path:  '^/',
            rules: [
                [ '^/login', null   ],
-               [ '^/',      'user' ]
+               [ '^/',      ['role', 'user'] ]
            ]
        }
    });

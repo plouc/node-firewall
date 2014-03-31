@@ -30,10 +30,10 @@ var fw = new firewall.Firewall('fw.main', '^/');
 fw.add('^/login', null);
 
 // secure admin area
-fw.add('^/admin', 'admin');
+fw.add('^/admin', ['role', 'admin']);
 
 // all other urls require user role
-fw.add('^/', 'user');
+fw.add('^/', ['role', 'user']);
 
 // add our new firewall to the map
 firewall.map.add(fw);
@@ -65,6 +65,9 @@ firewall.use(app);
   - Add default handlers to firewall
 * 0.1.6
   - Fix problem with middleware
+* 0.2.0
+  - Add strategies on firewall to ease addition of custom rules
+  - Removed Firewall.dump because of strategy support
 
 ## Credits
 
