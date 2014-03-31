@@ -68,6 +68,8 @@ firewall.use(app);
 * 0.2.0
   - Add strategies on firewall to ease addition of custom rules
   - Removed Firewall.dump because of strategy support
+* 0.2.1
+  - Add a way to configure map from json object with custom strategies
 
 ## Credits
 

@@ -93,6 +93,36 @@ describe('FirewallMap', function () {
     });
 
 
+    it('should throw an error when trying to configure firewall with a non-existing strategy', function () {
+        map.clear();
+
+        expect(function () {
+             map.fromConfig({
+                 'fw.main': {
+                     debug: true,
+                     path:  '^/',
+                     rules: [ ['^/', ['custom']] ]
+                 }
+             });
+        }).to.throw('Invalid strategy given, firewall "fw.main" does not know how to build "custom" strategy');
+    });
+
+
+    it('should provide a way to configure firewalls with non-default strategy', function () {
+        map.clear();
+        map.addStrategy('custom', function () { });
+        expect(function () {
+            map.fromConfig({
+                'fw.main': {
+                    debug: true,
+                    path:  '^/',
+                    rules: [ ['^/', ['custom']] ]
+                }
+            });
+        }).not.to.throw('Invalid strategy given, firewall "fw.main" does not know how to build "invalid" strategy');
+    });
+
+
     it('should provide a method to configure debug on all its firewalls', function () {
         map.debug(false);
         map.firewalls.forEach(function (firewall) {
