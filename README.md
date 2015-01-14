@@ -74,6 +74,7 @@ firewall.use(app);
   - debug method and flags was removed
   - No default success handler
   - Callback next is called by default if no success handler is configured
+  - 'use strict' on all modules
 
 ## Credits
 
