@@ -76,7 +76,6 @@ describe('FirewallMap', function () {
     it('should configure firewalls with a config object', function () {
         map.clear().fromConfig({
             'fw.main': {
-                debug: true,
                 path:  '^/',
                 rules: [
                     ['^/login', null],
@@ -99,7 +98,6 @@ describe('FirewallMap', function () {
         expect(function () {
              map.fromConfig({
                  'fw.main': {
-                     debug: true,
                      path:  '^/',
                      rules: [ ['^/', ['custom']] ]
                  }
@@ -114,24 +112,10 @@ describe('FirewallMap', function () {
         expect(function () {
             map.fromConfig({
                 'fw.main': {
-                    debug: true,
                     path:  '^/',
                     rules: [ ['^/', ['custom']] ]
                 }
             });
         }).not.to.throw('Invalid strategy given, firewall "fw.main" does not know how to build "invalid" strategy');
-    });
-
-
-    it('should provide a method to configure debug on all its firewalls', function () {
-        map.debug(false);
-        map.firewalls.forEach(function (firewall) {
-            expect(firewall.debugMode).to.equal(false);
-        });
-
-        map.debug(true);
-        map.firewalls.forEach(function (firewall) {
-            expect(firewall.debugMode).to.equal(true);
-        });
     });
 });

@@ -38,8 +38,6 @@ fw.add('^/', ['role', 'user']);
 // add our new firewall to the map
 firewall.map.add(fw);
 
-// enable debug (really verbose, should be disabled in production)
-firewall.map.debug(true);
 ```
 
 Enabling the middleware
@@ -70,6 +68,13 @@ firewall.use(app);
   - Removed Firewall.dump because of strategy support
 * 0.2.1
   - Add a way to configure map from json object with custom strategies
+* 0.2.2
+  - Fix issue #1
+  - Add debug on namespace node-firewall:map and node-firewall:firewall
+  - debug method and flags was removed
+  - No default success handler
+  - Callback next is called by default if no success handler is configured
+  - 'use strict' on all modules
 
 ## Credits
 
