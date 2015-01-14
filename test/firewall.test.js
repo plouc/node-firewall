@@ -60,14 +60,16 @@ describe('Firewall', function () {
     });
 
 
-    it('should do nothing if no rule were defined for a given request', function () {
+    it('should do nothing if no rule were defined for a given request', function (done) {
         fw = new Firewall('fw', '^/unreached');
 
         var called = false;
         expect(fw.check(testHelper.req('/test', true), {}, function () {
             called = true;
+             expect(called).to.equal(true);
+             done();
         })).to.equal(null);
-        expect(called).to.equal(true);
+       
     })
 
 
@@ -87,7 +89,6 @@ describe('Firewall', function () {
         fw
         .add('^/', null)
         .prepend('^/admin', ['role', 'admin'])
-        .debug(true);
 
         var logs = [];
         fw.logger = function () {
@@ -104,7 +105,7 @@ describe('Firewall', function () {
         expect(logs).to.deep.equal([
             '[firewall] "fw" rule match: ^/ [GET /]',
             '[firewall] "fw" granted access',
-            '[firewall] "fw" calling success handler'
+            '[firewall] "fw" no success handler'
         ]);
         logs = [];
 
@@ -141,7 +142,7 @@ describe('Firewall', function () {
             '[firewall] "fw" allowed roles: "admin"',
             '[firewall] "fw" matching roles: "admin"',
             '[firewall] "fw" granted access',
-            '[firewall] "fw" calling success handler'
+            '[firewall] "fw" no success handler'
         ]);
         logs = [];
     });

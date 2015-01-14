@@ -1,13 +1,13 @@
 {
   "name": "node-firewall",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Unobtrusively handles security based on roles (authorization) plus authentication initialization",
   "keywords": [
-      "express",
-      "connect",
-      "authorization",
-      "security",
-      "roles"
+    "express",
+    "connect",
+    "authorization",
+    "security",
+    "roles"
   ],
   "main": "./lib",
   "scripts": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/plouc/node-firewall",
   "dependencies": {
+    "debug": "^2.1.1",
     "lodash": "~2.4.1"
   },
   "devDependencies": {
