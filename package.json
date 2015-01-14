@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/plouc/node-firewall",
   "dependencies": {
-    "debug": "^2.1.1",
+    "debug": "~2.1.1",
     "lodash": "~2.4.1"
   },
   "devDependencies": {
